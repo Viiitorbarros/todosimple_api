@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.sql.Update;
 
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -35,12 +35,13 @@ public class User {
 
 
     @Column(name = "password" , nullable = false , length = 60)
-    @NotNull (groups = {CreateUser.class, Update.class})
-    @NotEmpty(groups = {CreateUser.class, Update.class})
-    @Size(groups = {CreateUser.class, Update.class}, min = 4, max = 60)
+    @NotNull (groups = {CreateUser.class, UpdateUser.class})
+    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
+    @Size(groups = {CreateUser.class, UpdateUser.class}, min = 4, max = 60)
     private String password;
 
-    //private List<Task> tasks = New  ArryList<Task>();
+    @ManyToMany(mappedBy = "users")
+    private List<Task> tasks;
 
 
     public User() {
